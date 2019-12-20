@@ -393,7 +393,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         [Description("Occurs when the property of a control is bound to a data value.")]
         [Category("Property Changed")]
-        public event EventHandler Format;
+        public event ListControlConvertEventHandler Format;
 
         /// <summary>
         /// Occurs when the value of the FormatInfo property changes.
