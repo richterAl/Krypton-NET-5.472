@@ -575,6 +575,9 @@ namespace ComponentFactory.Krypton.Toolkit
             _listBox.Validating += OnListBoxValidating;
             _listBox.Validated += OnListBoxValidated;
             _listBox.Click += OnListBoxClick;  // SKC: make sure that the default click is also routed.
+            _listBox.DoubleClick += OnListBoxDoubleClick;
+            _listBox.MouseClick += OnListBoxMouseClick;
+            _listBox.MouseDoubleClick += OnListBoxMouseDoubleClick;
 
             // Create the element that fills the remainder space and remembers fill rectangle
             _layoutFill = new ViewLayoutFill(_listBox)
@@ -1808,6 +1811,13 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
             }
         }
+
+        private void OnListBoxDoubleClick(object sender, EventArgs e) => OnDoubleClick(e);
+
+        private void OnListBoxMouseClick(object sender, MouseEventArgs e) => OnMouseClick(e);
+
+        private void OnListBoxMouseDoubleClick(object sender, MouseEventArgs e) => OnMouseDoubleClick(e);
+
         #endregion
     }
 }
