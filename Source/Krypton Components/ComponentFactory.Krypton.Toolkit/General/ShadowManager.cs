@@ -381,7 +381,14 @@ namespace ComponentFactory.Krypton.Toolkit
             // we are interested in listening to WH_SHELL events, mainly the HSHELL_REDRAW event.
             _hHook = PI.SetWindowsHookEx(PI.WH_.SHELL, _hookProc, IntPtr.Zero, processId);
 
-            Application.ApplicationExit += delegate { PI.UnhookWindowsHookEx(_hHook); };
+            if (AppDomain.CurrentDomain.IsDefaultAppDomain())
+            {
+                Application.ApplicationExit += delegate { PI.UnhookWindowsHookEx(_hHook); };
+            }
+            else
+            {
+                AppDomain.CurrentDomain.DomainUnload += delegate { PI.UnhookWindowsHookEx(_hHook); };
+            }
         }
 
         internal static void Register(Form f)
