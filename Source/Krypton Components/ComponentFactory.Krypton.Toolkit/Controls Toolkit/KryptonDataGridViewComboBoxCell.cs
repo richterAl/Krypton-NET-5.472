@@ -333,6 +333,7 @@ namespace ComponentFactory.Krypton.Toolkit
                             strings[i] = comboColumn.Items[i];
                         }
 
+                        comboBox.Items.Clear();
                         comboBox.Items.AddRange(strings);
 
                         string[] autoAppend = new string[comboColumn.AutoCompleteCustomSource.Count];
