@@ -135,7 +135,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     _viewButton.ElementState = PaletteState.Disabled;
                 }
-                if (pressed)
+                else if (pressed)
                 {
                     _viewButton.ElementState = PaletteState.Pressed;
                 }
@@ -242,7 +242,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         {
                             _viewButton.ElementState = PaletteState.Disabled;
                         }
-                        if (pressed)
+                        else if (pressed)
                         {
                             _viewButton.ElementState = PaletteState.Pressed;
                         }
