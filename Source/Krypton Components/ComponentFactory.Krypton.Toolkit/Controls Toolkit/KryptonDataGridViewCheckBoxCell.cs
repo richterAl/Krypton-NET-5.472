@@ -202,6 +202,19 @@ namespace ComponentFactory.Krypton.Toolkit
                         cellBounds.Width--;
                         cellBounds.Height--;
 
+                        // Apply the padding
+                        if (kDgv.RightToLeftInternal)
+                        {
+                            cellBounds.Offset(cellStyle.Padding.Right, cellStyle.Padding.Bottom);
+                        }
+                        else
+                        {
+                            cellBounds.Offset(cellStyle.Padding.Left, cellStyle.Padding.Top);
+                        }
+
+                        cellBounds.Width -= cellStyle.Padding.Horizontal;
+                        cellBounds.Height -= cellStyle.Padding.Vertical;
+
                         // Adjust the horizontal alignment
                         switch (cellStyle.Alignment)
                         {
@@ -235,22 +248,32 @@ namespace ComponentFactory.Krypton.Toolkit
                         }
 
                         // Make the cell the same size as the check box itself
-                        cellBounds.Width = checkBoxSize.Width;
-                        cellBounds.Height = checkBoxSize.Height;
+                        cellBounds.Width = System.Math.Min(cellBounds.Width, checkBoxSize.Width);
+                        cellBounds.Height = System.Math.Min(cellBounds.Height, checkBoxSize.Height);
 
-                        // Remember the current drawing bounds
-                        _contentBounds = new Rectangle(cellBounds.X - startBounds.X,
-                            cellBounds.Y - startBounds.Y,
-                            cellBounds.Width, cellBounds.Height);
+                        // Prevent drawing out of cell
+                        if ((cellBounds.Size.Height >= checkBoxSize.Height) &&
+                            (cellBounds.Size.Width >= checkBoxSize.Width))
+                        {
 
-                        // Perform actual drawing of the check box
-                        renderContext.Renderer.RenderGlyph.DrawCheckBox(renderContext,
-                            cellBounds,
-                            kDgv.Redirector,
-                            kDgv.Enabled && !base.ReadOnly,
-                            checkState,
-                            tracking,
-                            pressed);
+                            // Remember the current drawing bounds
+                            _contentBounds = new Rectangle(cellBounds.X - startBounds.X,
+                                cellBounds.Y - startBounds.Y,
+                                cellBounds.Width, cellBounds.Height);
+
+                            // Perform actual drawing of the check box
+                            renderContext.Renderer.RenderGlyph.DrawCheckBox(renderContext,
+                                cellBounds,
+                                kDgv.Redirector,
+                                kDgv.Enabled && !base.ReadOnly,
+                                checkState,
+                                tracking,
+                                pressed);
+                        }
+                        else
+                        {
+                            _contentBounds = Rectangle.Empty;
+                        }
                     }
                 }
             }
